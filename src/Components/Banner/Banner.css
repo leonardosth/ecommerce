@@ -1,0 +1,14 @@
+.sliderWrapper {
+    width: 100vw;
+}
+
+.inactive {
+    
+    translate: -100%;
+    transition: translate linear 700ms;
+    
+}
+
+.navButton {
+    z-index: 1;
+}

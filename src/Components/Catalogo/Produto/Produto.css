@@ -1,0 +1,32 @@
+.card {
+    max-width: 340px;
+    max-height: 390px;
+    padding: 10px;
+}
+
+.imgConteiner {
+    width: auto;
+    max-height: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.imgConteiner > img {
+    padding: 3px;
+    max-width: 100%;
+    max-width: 100%;
+}
+
+.infoConteiner {
+    display: flex;
+    flex-direction: column;
+}
+
+.buttonCompra {
+    border: none;
+    background-color: green;
+    color: white;
+    padding: 5 6;
+    
+}
