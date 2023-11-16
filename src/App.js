@@ -1,14 +1,9 @@
-import "./App.css";
-import Navigation from "./Components/Navigation/Navigation";
-import Banner from "./Components/Banner/Banner";
-import Catalogo from "./Components/Catalogo/Catalogo";
+import MainPage from "./Components/MainPage/MainPage";
 
 function App() {
   return (
     <div className="App">
-      <Navigation />
-      <Banner />
-      <Catalogo />
+      <MainPage />
     </div>
   );
 }

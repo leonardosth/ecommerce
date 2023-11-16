@@ -1,7 +1,7 @@
 import Produto from "./Produto/Produto.js";
 import img1 from "../../Assets/dualsense.webp";
 import img2 from "../../Assets/headset.webp";
-import "./Catalogo.css";
+import Grid from "@mui/material/Unstable_Grid2";
 
 export default function Catalogo() {
   const produtos = [
@@ -19,17 +19,19 @@ export default function Catalogo() {
     },
   ];
   return (
-    <div className="catalogo">
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {produtos.map((prod) => {
         return (
-          <Produto
-            imagem={prod.imagem}
-            altText={prod.altText}
-            nome={prod.nome}
-            codigo={prod.codigo}
-          />
+          <Grid xs={12} sm={3}>
+            <Produto
+              imagem={prod.imagem}
+              altText={prod.altText}
+              nome={prod.nome}
+              codigo={prod.codigo}
+            />
+          </Grid>
         );
       })}
-    </div>
+    </Grid>
   );
 }

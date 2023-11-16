@@ -1,52 +1,101 @@
-import { useState } from "react";
+import * as React from "react";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import MobileStepper from "@mui/material/MobileStepper";
+import Button from "@mui/material/Button";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import SwipeableViews from "react-swipeable-views";
+import { autoPlay } from "react-swipeable-views-utils";
 import image1 from "../../Assets/13_11-eBF-ofertas2-home-destaque-desk-c664114dac3a.webp";
 import image2 from "../../Assets/desk_1250x313-14d9ef197596.webp";
-import "./Banner.css";
-import "./Elements/Elements.js";
-import Elements from "./Elements/Elements.js";
-import NavButton from "./NavButton/NavButton.js";
 
-export default function Banner() {
-  const [activeIndex, setActiveIndex] = useState(0);
+const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-  const elementos = [
-    {
-      name: "",
-      index: 0,
-      source: image1,
-      altText: "banner 1",
-    },
-    {
-      name: "",
-      index: 1,
-      source: image2,
-      altText: "banner 2",
-    },
-  ];
+const images = [
+  {
+    label: "Promoção Black Friday",
+    imgPath: image1,
+  },
+  {
+    label: "Cupom de desconto disponível",
+    imgPath: image2,
+  },
+];
 
-  let elem = elementos[activeIndex];
+function Banner() {
+  const theme = useTheme();
+  const [activeStep, setActiveStep] = React.useState(0);
+  const maxSteps = images.length;
 
-  function handleCarousel(e) {
-    console.log(e);
-    if (e.dir === "left") {
-      console.log("left");
-      elem.name = "sliderImg inactive";
-      setActiveIndex(activeIndex - 1);
-    }
-  }
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleStepChange = (step) => {
+    setActiveStep(step);
+  };
 
   return (
-    <div className="sliderWrapper">
-      <div className="navButton">
-        <NavButton onClick={handleCarousel} dir="left" />
-        <NavButton dir="right" />
-      </div>
-      <Elements
-        name={(elem.name = "sliderImg active")}
-        index={elem.index}
-        source={elem.source}
-        altText={elem.altText}
+    <Box sx={{ flexGrow: 1 }}>
+      <AutoPlaySwipeableViews
+        axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+        index={activeStep}
+        onChangeIndex={handleStepChange}
+        enableMouseEvents
+      >
+        {images.map((step, index) => (
+          <div key={step.label}>
+            {Math.abs(activeStep - index) <= 2 ? (
+              <Box
+                component="img"
+                sx={{
+                  display: "block",
+                  overflow: "hidden",
+                  width: "100%",
+                }}
+                src={step.imgPath}
+                alt={step.label}
+              />
+            ) : null}
+          </div>
+        ))}
+      </AutoPlaySwipeableViews>
+      <MobileStepper
+        steps={maxSteps}
+        position="static"
+        activeStep={activeStep}
+        nextButton={
+          <Button
+            size="small"
+            onClick={handleNext}
+            disabled={activeStep === maxSteps - 1}
+          >
+            Próximo
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowLeft />
+            ) : (
+              <KeyboardArrowRight />
+            )}
+          </Button>
+        }
+        backButton={
+          <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight />
+            ) : (
+              <KeyboardArrowLeft />
+            )}
+            Anterior
+          </Button>
+        }
       />
-    </div>
+    </Box>
   );
 }
+
+export default Banner;
