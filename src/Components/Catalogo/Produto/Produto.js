@@ -6,17 +6,16 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 
 export default function Produto(produto) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ maxWidth: 345, height: 400, objectFit: "contain" }}>
       <CardActionArea>
         <CardMedia
           component="img"
-          max-height="100%"
-          max-width="100%"
           image={produto.imagem}
           title={produto.altText}
+          sx={{ objectFit: "contain", maxHeight: 200, maxWidth: "90%" }}
         ></CardMedia>
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h7" component="div">
             {produto.nome}
           </Typography>
           <Typography variant="body2" color="text.secondary">

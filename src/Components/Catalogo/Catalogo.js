@@ -1,37 +1,42 @@
+import React, { useEffect, useState } from "react";
 import Produto from "./Produto/Produto.js";
-import img1 from "../../Assets/dualsense.webp";
-import img2 from "../../Assets/headset.webp";
 import Grid from "@mui/material/Unstable_Grid2";
 
-export default function Catalogo() {
-  const produtos = [
-    {
-      imagem: img1,
-      altText: "placeholder",
-      nome: "Produto 1",
-      codigo: "test1",
-    },
-    {
-      imagem: img2,
-      altText: "placeholder",
-      nome: "Produto 2",
-      codigo: "test2",
-    },
-  ];
+function Catalogo() {
+  const [produtos, setProdutos] = useState([]);
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        let response = await fetch("https://fakestoreapi.com/products", {
+          method: "GET",
+        });
+        let data = await response.json();
+        setProdutos(data);
+      } catch (error) {
+        console.error("Erro ao obter produtos:", error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   return (
     <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      {produtos.map((prod) => {
-        return (
-          <Grid xs={12} sm={3}>
-            <Produto
-              imagem={prod.imagem}
-              altText={prod.altText}
-              nome={prod.nome}
-              codigo={prod.codigo}
-            />
-          </Grid>
-        );
-      })}
+      {produtos.map((prod) => (
+        <Grid key={prod.id} xs={12} sm={3}>
+          <Produto
+            imagem={prod.image}
+            altText={prod.description}
+            nome={prod.title}
+            codigo={prod.id}
+            preco={prod.price}
+            categoria={prod.category}
+          />
+        </Grid>
+      ))}
     </Grid>
   );
 }
+
+export default Catalogo;
