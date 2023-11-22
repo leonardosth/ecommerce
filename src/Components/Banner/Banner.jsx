@@ -7,26 +7,13 @@ import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import SwipeableViews from "react-swipeable-views";
 import { autoPlay } from "react-swipeable-views-utils";
-import image1 from "../../Assets/13_11-eBF-ofertas2-home-destaque-desk-c664114dac3a.webp";
-import image2 from "../../Assets/desk_1250x313-14d9ef197596.webp";
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
-const images = [
-  {
-    label: "Promoção Black Friday",
-    imgPath: image1,
-  },
-  {
-    label: "Cupom de desconto disponível",
-    imgPath: image2,
-  },
-];
-
-function Banner() {
+function Banner({ carousel }) {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = images.length;
+  const maxSteps = carousel.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -48,8 +35,8 @@ function Banner() {
         onChangeIndex={handleStepChange}
         enableMouseEvents
       >
-        {images.map((step, index) => (
-          <div key={step.label}>
+        {carousel.map((step, index) => (
+          <div key={index}>
             {Math.abs(activeStep - index) <= 2 ? (
               <Box
                 component="img"
@@ -58,8 +45,8 @@ function Banner() {
                   overflow: "hidden",
                   width: "100%",
                 }}
-                src={step.imgPath}
-                alt={step.label}
+                src={step.image_url}
+                alt={step.nome}
               />
             ) : null}
           </div>
