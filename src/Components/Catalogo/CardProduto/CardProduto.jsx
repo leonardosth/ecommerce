@@ -21,11 +21,14 @@ export default function CardProduto({ item, handleChange }) {
           sx={{ objectFit: "contain", maxHeight: 200, maxWidth: "90%" }}
         ></CardMedia>
         <CardContent>
-          <Typography gutterBottom variant="h7" component="div">
+          <Typography variant="body1" component="div">
             {produto.nome}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             cód. {produto.id}
+          </Typography>
+          <Typography variant="subtitle2" component="div">
+            R$ {produto.preco.split(".").join(",")}
           </Typography>
         </CardContent>
       </CardActionArea>
