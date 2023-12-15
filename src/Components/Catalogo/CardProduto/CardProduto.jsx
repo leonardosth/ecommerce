@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 
-export default function CardProduto({ item, handleChange }) {
+export default function CardProduto({ card, item, handleChange }) {
   const produto = item;
 
   return (
@@ -13,6 +13,7 @@ export default function CardProduto({ item, handleChange }) {
         onClick={() => {
           handleChange(produto.id);
         }}
+        sx={card.display}
       >
         <CardMedia
           component="img"
@@ -32,15 +33,19 @@ export default function CardProduto({ item, handleChange }) {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions
-        onClick={() => {
-          handleChange(produto.id);
-        }}
-      >
-        <Button variant="contained" color="success">
-          Comprar
-        </Button>
-      </CardActions>
+      {card.showButton ? (
+        <CardActions
+          onClick={() => {
+            handleChange(produto.id);
+          }}
+        >
+          <Button variant="contained" color="success">
+            Comprar
+          </Button>
+        </CardActions>
+      ) : (
+        <></>
+      )}
     </Card>
   );
 }

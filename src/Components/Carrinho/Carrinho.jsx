@@ -1,31 +1,22 @@
-import { Container } from "@mui/material";
-import { useEffect } from "react";
+import { Container, Button } from "@mui/material";
+import CardProduto from "../Catalogo/CardProduto/CardProduto.jsx";
 
-export default function Carrinho({ pedido, setPedido }) {
-  useEffect(() => {
-    async function fetchPedidos() {
-      try {
-        let response = await fetch("http://localhost:5000/pedidos/", {
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-          },
-        });
-        let data = await response.json();
-        setPedido(data);
-      } catch (error) {
-        console.error("Erro ao obter produtos:", error);
-      }
-    }
-
-    fetchPedidos();
-  }, []);
-
-  console.log(pedido);
-
+export default function Carrinho({ card, pedido, produtos }) {
   return (
-    <Container>
-      <p>Carrinho</p>
+    <Container sx={{ display: "flex" }}>
+      <Container>
+        {pedido[0].produto_pedido.map((item_id) => (
+          <CardProduto key={item_id} item={produtos[item_id]} card={card} />
+        ))}
+      </Container>
+      <Container>
+        <p>Pedido aberto</p>
+        <p>Pedido #{pedido[0].id}</p>
+        <p>Total: R${pedido[0].total_pedido}</p>
+        <Button variant="contained" color="success">
+          FINALIZAR COMPRA
+        </Button>
+      </Container>
     </Container>
   );
 }
