@@ -3,11 +3,37 @@ import Banner from "../../Banner/Banner.jsx";
 import SeletorQtd from "../SeletorQtd/SeletorQtd.jsx";
 import { useState } from "react";
 
-export default function ProductMain({ produto }) {
+export default function ProductMain({ pedido, setPedido, produto }) {
   const [quantidade, setQuantidade] = useState("");
 
   function handleClick(qtd) {
-    console.log(qtd.seletor);
+    if (pedido === "fechado") {
+      setPedido("aberto");
+    }
+    const produto_pedido = {
+      produto_id: parseInt(produto.id),
+      quantidade: parseInt(qtd.seletor),
+      preco: parseFloat(produto.preco),
+    };
+
+    async function enviaProdutoCarrinho() {
+      try {
+        console.log(JSON.stringify(produto_pedido));
+        let response = await fetch("http://localhost:5000/produto_pedido/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(produto_pedido),
+        });
+        let data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error("Erro ao enviar produtos:", error);
+      }
+    }
+
+    enviaProdutoCarrinho();
   }
 
   return (
@@ -23,7 +49,7 @@ export default function ProductMain({ produto }) {
           <Typography variant="h3">{produto.nome}</Typography>
           <Typography color="text.secondary">Cód. {produto.id}</Typography>
           <Typography variant="h5" color="text.primary">
-            R$ {produto.preco}
+            R$ {produto.preco.split(".").join(",")}
           </Typography>
         </Container>
         <Container>

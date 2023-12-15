@@ -5,8 +5,7 @@ import Banner from "../Banner/Banner.jsx";
 import image1 from "../../Assets/13_11-eBF-ofertas2-home-destaque-desk-c664114dac3a.webp";
 import image2 from "../../Assets/desk_1250x313-14d9ef197596.webp";
 
-function Catalogo() {
-  const [produtos, setProdutos] = useState([]);
+function Catalogo({ produtos, setProdutos, pedido, setPedido, card }) {
   const [prodIndex, setProdIndex] = useState(null);
 
   const bannerImages = [
@@ -47,11 +46,21 @@ function Catalogo() {
     return (
       <div>
         <Banner carousel={bannerImages} />
-        <CatalogoGrid listItens={produtos} handleChange={handleChange} />
+        <CatalogoGrid
+          listItens={produtos}
+          handleChange={handleChange}
+          card={card}
+        />
       </div>
     );
   } else {
-    return <ProductPage produto={produtos[prodIndex]} />;
+    return (
+      <ProductPage
+        produto={produtos[prodIndex]}
+        pedido={pedido}
+        setPedido={setPedido}
+      />
+    );
   }
 }
 

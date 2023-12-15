@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 
-export default function CardProduto({ item, handleChange }) {
+export default function CardProduto({ card, item, handleChange }) {
   const produto = item;
 
   return (
@@ -13,6 +13,7 @@ export default function CardProduto({ item, handleChange }) {
         onClick={() => {
           handleChange(produto.id);
         }}
+        sx={card.display}
       >
         <CardMedia
           component="img"
@@ -21,23 +22,30 @@ export default function CardProduto({ item, handleChange }) {
           sx={{ objectFit: "contain", maxHeight: 200, maxWidth: "90%" }}
         ></CardMedia>
         <CardContent>
-          <Typography gutterBottom variant="h7" component="div">
+          <Typography variant="body1" component="div">
             {produto.nome}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             cód. {produto.id}
           </Typography>
+          <Typography variant="subtitle2" component="div">
+            R$ {produto.preco.split(".").join(",")}
+          </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions
-        onClick={() => {
-          handleChange(produto.id);
-        }}
-      >
-        <Button variant="contained" color="success">
-          Comprar
-        </Button>
-      </CardActions>
+      {card.showButton ? (
+        <CardActions
+          onClick={() => {
+            handleChange(produto.id);
+          }}
+        >
+          <Button variant="contained" color="success">
+            Comprar
+          </Button>
+        </CardActions>
+      ) : (
+        <></>
+      )}
     </Card>
   );
 }
